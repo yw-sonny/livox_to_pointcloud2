@@ -25,7 +25,6 @@ def pointcloud_callback(msg):
     global accumulated_points, cnt
 
     try:
-        # TF 변환: /body -> /map
         transform = tf_buffer.lookup_transform("map", msg.header.frame_id, msg.header.stamp, rospy.Duration(0.5))
         cloud_transformed_msg = tf2_sensor_msgs.do_transform_cloud(msg, transform)
     except (tf2_ros.LookupException, tf2_ros.ExtrapolationException, tf2_ros.ConnectivityException) as e:
@@ -43,14 +42,11 @@ def main():
 
     rospy.init_node('pointcloud_accumulator', anonymous=True)
     
-    # TF listener
     tf_buffer = tf2_ros.Buffer()
     tf_listener = tf2_ros.TransformListener(tf_buffer)
     
-    # Subscriber
     rospy.Subscriber("/cloud_registered_body", PointCloud2, pointcloud_callback)
     
-    # 종료 시점에 저장
     rospy.on_shutdown(save_map)
     
     rospy.spin()

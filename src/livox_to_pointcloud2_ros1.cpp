@@ -12,8 +12,8 @@ namespace livox_to_pointcloud2 {
 class LivoxToPointCloud2 {
 public:
   LivoxToPointCloud2() : nh("~") {
-    points_pub = nh.advertise<sensor_msgs::PointCloud2>("/livox/points/filtered", 10);
-    points_sub = nh.subscribe("/livox/lidar/filtered", 10, &LivoxToPointCloud2::callback, this);
+    points_sub = nh.subscribe("/input", 10, &LivoxToPointCloud2::callback, this);
+    points_pub = nh.advertise<sensor_msgs::PointCloud2>("/output", 10);
   }
 
   void callback(const livox_ros_driver2::CustomMsg::ConstPtr& livox_msg) {

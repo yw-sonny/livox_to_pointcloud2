@@ -18,6 +18,9 @@ if($ENV{ROS_VERSION} EQUAL 1)
     roscpp
     sensor_msgs
     livox_ros_driver2
+
+    rospy
+    std_msgs
   )
   catkin_package()
 
@@ -34,6 +37,25 @@ if($ENV{ROS_VERSION} EQUAL 1)
   add_dependencies(livox_to_pointcloud2_node
     ${catkin_EXPORTED_TARGETS}
   )
+
+  # python 
+  catkin_install_python(PROGRAMS
+    scripts/livox_filter_slam.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
+  catkin_install_python(PROGRAMS
+    scripts/livox_filter_heightmap.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
+  catkin_install_python(PROGRAMS
+    scripts/pointcloud_transform.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
+  catkin_install_python(PROGRAMS
+    scripts/imu_transform.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
+
 elseif($ENV{ROS_VERSION} EQUAL 2)
   ##########################
   ## ament-related (ROS2) ##

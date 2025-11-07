@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import rospy
-from livox_ros_driver.msg import CustomMsg, CustomPoint
+from livox_ros_driver2.msg import CustomMsg, CustomPoint
 
 def filterAxis(source, axis, min_val, max_val):
     inrange = []
@@ -17,28 +17,6 @@ def filterAxis(source, axis, min_val, max_val):
     
     return inrange, outrange
 
-def survivePoints(source, axis, min_val, max_val):
-    filtered = []
-    
-    for p in source.points:
-        value = getattr(p, axis); # value of corresponding axis of points
-        if(min_val < value < max_val):
-            filtered.append(p) 
-    
-    return filtered
-
-def deletePoints(source, axis, min_val, max_val):
-    filtered = []
-    
-    for p in source.points:
-        value = getattr(p, axis); # value of corresponding axis of points
-        if(min_val < value < max_val):
-            continue
-        else:
-            filtered.append(p) 
-    
-    return filtered
-
 def callback(msg):
     filtered = []
     source = []
@@ -52,7 +30,7 @@ def callback(msg):
     y_inrange, y_outrange = filterAxis(x_inrange, "y", -0.5, 0.5)
     for p in y_outrange:
         filtered.append(p)
-
+        
     filtered_msg = CustomMsg()
     filtered_msg.header = msg.header
     filtered_msg.timebase = msg.timebase
@@ -61,8 +39,7 @@ def callback(msg):
     filtered_msg.points = filtered
 
     pub.publish(filtered_msg)
-    rospy.loginfo(f"Published filtered cloud ({filtered_msg.point_num} points)")
-
+    
 if __name__ == '__main__':
     rospy.init_node('livox_filter_node', anonymous=True)
     rospy.loginfo("✅ Livox Filter Node Started")

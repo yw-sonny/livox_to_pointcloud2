@@ -9,7 +9,7 @@ from livox_ros_driver.msg import CustomMsg, CustomPoint
 
 def callback(msg):
     try:
-        trans = tf_buffer.lookup_transform("body", "livox_frame", rospy.Time(0), rospy.Duration(1.0))
+        trans = tf_buffer.lookup_transform("body", "livox_frame", rospy.Time(0), rospy.Duration(0.01))
 
         t = trans.transform.translation
         q = trans.transform.rotation

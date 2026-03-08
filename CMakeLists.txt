@@ -44,7 +44,11 @@ if($ENV{ROS_VERSION} EQUAL 1)
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
   catkin_install_python(PROGRAMS
-    scripts/livox_filter_heightmap.py
+    scripts/livox_filter_heightmap_go2.py
+    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
+  catkin_install_python(PROGRAMS
+    scripts/livox_filter_heightmap_aidin8.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
   catkin_install_python(PROGRAMS

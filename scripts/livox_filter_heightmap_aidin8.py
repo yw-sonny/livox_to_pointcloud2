@@ -23,18 +23,22 @@ def callback(msg):
     for p in msg.points:
         source.append(p)
     
-    z_inrange, z_outrange = filterAxis(source, "z", -2.0, 2.0)
+    # z_inrange, z_outrange = filterAxis(source, "z", -2.0, 2.0)
+    # for p in z_inrange:
+    #     filtered.append(p)
     
-    x_inrange, x_outrange = filterAxis(z_inrange, "x", -0.5, 0.5)
+    z_inrange, z_outrange = filterAxis(source, "z", -1.0, 1.0)
+    
+    x_inrange, x_outrange = filterAxis(z_inrange, "x", -1.5, 0.1)
 
     x_inrange2, x_outrange2 = filterAxis(x_outrange, "x", -6.12, 6.12)
     y_inrange, y_outrange = filterAxis(x_inrange2, "y", -6.12, 6.12)
     for p in y_inrange:
         filtered.append(p)
   
-    y_inrange2, y_outrange2 = filterAxis(x_inrange, "y", -0.2, 0.2)
-    y_inrange2, y_outrange2 = filterAxis(y_outrange2, "y", -6.12, 6.12)
-    for p in y_inrange2:
+    y_inrange2, y_outrange2 = filterAxis(x_inrange, "y", -1.0, 1.0)
+    y_inrange3, y_outrange3 = filterAxis(y_outrange2, "y", -6.12, 6.12)
+    for p in y_inrange3:
         filtered.append(p)
         
     filtered_msg = CustomMsg()
